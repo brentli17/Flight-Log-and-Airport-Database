@@ -48,6 +48,16 @@ app.get("/api/flights", async (req, res) => {
     }
 });
 
+// API Endpoint to Delete All Flights
+app.delete("/api/flights", async (req, res) => {
+    try {
+        await Flight.deleteMany({});
+        res.json({ message: "All flights cleared" });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

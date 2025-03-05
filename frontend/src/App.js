@@ -16,10 +16,17 @@ function App() {
     };
 
     const clearFlights = async () => {
-      await fetch("http://localhost:5000/api/flights", {
-          method: "DELETE",
-      });
-      setFlights([]);
+        try {
+            const response = await fetch("http://localhost:5000/api/flights", {
+                method: "DELETE",
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            setFlights([]);
+        } catch (error) {
+            console.error("Failed to clear flights:", error);
+        }
     };
 
     return (
